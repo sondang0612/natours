@@ -8,7 +8,7 @@ const tourSchema = new Schema({
     unique: true,
     trim: true,
   },
-  durations: {
+  duration: {
     type: Number,
     required: [true, 'A tour must have a duration'],
   },
@@ -17,7 +17,7 @@ const tourSchema = new Schema({
     required: [true, 'A tour must have a group size'],
   },
   difficulty: {
-    type: Number,
+    type: String,
     require: [true, 'A tour must have a difficulty'],
   },
   ratingsAverages: {
