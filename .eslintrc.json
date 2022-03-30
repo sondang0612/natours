@@ -19,6 +19,10 @@
         "consistent-return": "off",
         "import/newline-after-import": "off",
         "comma-dangle": "off",
-        "lines-between-class-members": "off"
+        "lines-between-class-members": "off",
+        "indent": [
+            "off",
+            4
+        ]
     }
 }
