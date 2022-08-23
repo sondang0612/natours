@@ -4,49 +4,48 @@ const dotenv = require('dotenv');
 const Tour = require('../../schemas/tourSchema');
 dotenv.config({ path: './config.env' });
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
+// public db
+// const DB = process.env.DATABASE.replace(
+//     '<PASSWORD>',
+//     process.env.DATABASE_PASSWORD
+// );
 mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('DB connection successful!'));
+    .connect(process.env.DATABASE_LOCAL, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log('DB connection successful!'));
 
 // READING JSON FILE
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
-);
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
 
 // IMPORT DATA INTO DB
 const importData = async () => {
-  try {
-    await Tour.create(tours);
-    console.log('Data successfully loaded!');
-    process.exit();
-  } catch (err) {
-    console.log(err);
-  }
+    try {
+        await Tour.create(tours);
+        console.log('Data successfully loaded!');
+        process.exit();
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 // DELETE ALL DATA FROM DB
 const deleteData = async () => {
-  try {
-    await Tour.deleteMany();
-    console.log('Data successfully deleted!');
-    process.exit();
-  } catch (err) {
-    console.log(err);
-  }
+    try {
+        await Tour.deleteMany();
+        console.log('Data successfully deleted!');
+        process.exit();
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 const option = process.argv[2];
 if (option == '--import') {
-  importData();
+    importData();
 } else if (option == '--delete') {
-  deleteData();
+    deleteData();
 }
